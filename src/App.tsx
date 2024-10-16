@@ -1,5 +1,6 @@
 import "@/styles/index.scss";
 import Memo from "@/pages/Memo";
+import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import useMemoStore from "@/store/memoStore";
 
@@ -12,17 +13,14 @@ function App() {
       {memos.map((memo) => (
         <Memo key={memo.id} {...memo} />
       ))}
-      <AddIcon
-        sx={{
-          float: "right",
-          backgroundColor: "#e4e4e4",
-          borderRadius: "5px",
-          cursor: "pointer",
-          fontSize: "30px",
-          border: "1px solid black",
-        }}
+      <Fab
+        color="primary"
+        aria-label="add"
+        style={{ position: "absolute", right: 40, bottom: 40 }}
         onClick={AddMemo}
-      />
+      >
+        <AddIcon />
+      </Fab>
     </>
   );
 }

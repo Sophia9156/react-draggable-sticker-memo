@@ -26,7 +26,13 @@ const useMemoStore = create<State & Actions>((set) => ({
       ...state,
       memos: [
         ...state.memos,
-        { ...defaultMemoState, id: uuidv1(), zIndex: state.memos.length + 1 },
+        {
+          ...defaultMemoState,
+          id: uuidv1(),
+          x: Math.random() * 200,
+          y: Math.random() * 200,
+          zIndex: state.memos.length + 1,
+        },
       ],
     })),
 }));
