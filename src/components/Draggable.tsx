@@ -7,25 +7,29 @@ import {
   useState,
 } from "react";
 import { debounce } from "underscore";
+import styles from "./draggable.module.scss";
 
 interface Props {
   children?: React.ReactNode | React.ReactNode[];
   handleRef: MutableRefObject<HTMLDivElement | null>;
-  x?: number;
-  y?: number;
+  defaultPosition?: { x: number; y: number };
+  zIndex?: number;
   onMove?: (x: number, y: number) => void;
 }
 
 const Draggable: React.FC<Props> = ({
   children,
   handleRef,
-  x = 0,
-  y = 0,
+  zIndex,
+  defaultPosition = { x: 0, y: 0 },
   onMove,
 }) => {
   const dragRef = useRef<HTMLDivElement | null>(null);
   const initialPosition = useRef({ x: 0, y: 0 });
-  const [position, setPosition] = useState({ x, y });
+  const [position, setPosition] = useState({
+    x: defaultPosition.x,
+    y: defaultPosition.y,
+  });
 
   const Move = useMemo(
     () => debounce((x: number, y: number) => onMove?.(x, y), 500),
@@ -82,8 +86,11 @@ const Draggable: React.FC<Props> = ({
   return (
     <div
       ref={dragRef}
-      className="draggable"
-      style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+      className={styles.draggable}
+      style={{
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        zIndex,
+      }}
     >
       {children}
     </div>
